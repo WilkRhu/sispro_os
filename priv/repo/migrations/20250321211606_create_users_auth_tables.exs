@@ -2,19 +2,24 @@ defmodule SisproOs.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do
-    execute "CREATE EXTENSION IF NOT EXISTS citext", ""
-
-    create table(:users) do
-      add :email, :citext, null: false
+    create table(:users, primary_key: false) do
+      add :id, :uuid, primary_key: true, null: false
+      add :name, :string
+      add :ddd, :string
+      add :phone, :string
+      add :email, :string, null: false
+      add :cpf, :string, null: false
       add :hashed_password, :string, null: false
-      add :confirmed_at, :naive_datetime
+      add :token, :string
+      add :email_verified, :boolean
       timestamps()
     end
 
     create unique_index(:users, [:email])
+    create unique_index(:users, [:cpf])
 
     create table(:users_tokens) do
-      add :user_id, references(:users, on_delete: :delete_all), null: false
+      add :user_id, references(:users, type: :uuid, on_delete: :delete_all), null: false
       add :token, :binary, null: false
       add :context, :string, null: false
       add :sent_to, :string

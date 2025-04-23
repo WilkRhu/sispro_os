@@ -50,7 +50,6 @@ defmodule SisproOs.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:bcrypt_elixir, "~> 2.0"},
       {:secure_random, "~> 0.5"},
       {:guardian, "~> 2.0"},
       {:excoveralls, ">= 0.14.6", only: :test},
