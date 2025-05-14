@@ -3,7 +3,6 @@ defmodule SisproOsWeb.UserRegistrationController do
 
   alias SisproOs.Accounts
   alias SisproOs.Accounts.User
-  alias SisproOsWeb.UserAuth
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})
@@ -20,11 +19,13 @@ defmodule SisproOsWeb.UserRegistrationController do
           )
 
         conn
-        |> put_flash(:info, "User created successfully.")
-        |> UserAuth.log_in_user(user)
+        |> put_status(:created)
+        |> render("user.json", user: user)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render("error.json", changeset: changeset)
     end
   end
 end

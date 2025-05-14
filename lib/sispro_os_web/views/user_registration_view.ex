@@ -6,17 +6,15 @@ defmodule SisproOsWeb.UserRegistrationView do
       user: %{
         id: user.id,
         name: user.name,
-        emai: user.email
+        emai: user.email,
+        role: user.role
       }
     }
   end
 
-  def render("user.json", %{user: user}) when is_list(user) do
-    order = [:id, :name, :email, :ddd, :phone, :type]
-
-    user
-    |> Enum.map(fn x ->
-      Map.take(x, order)
-    end)
+  def render("error.json", %{changeset: changeset}) do
+    %{
+      errors: Ecto.Changeset.traverse_errors(changeset, fn {msg, _opts} -> msg end)
+    }
   end
 end

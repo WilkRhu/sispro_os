@@ -12,6 +12,7 @@ defmodule SisproOs.Repo.Migrations.CreateUsersAuthTables do
       add :hashed_password, :string, null: false
       add :token, :string
       add :email_verified, :boolean
+      add :role, :string
       timestamps()
     end
 
